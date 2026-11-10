@@ -1,0 +1,12 @@
+plan_name: dcs-to-skills
+status: shipped
+branch: worktree-dcs-to-skills
+worktree: /workspace/enso/.claude/worktrees/dcs-to-skills
+pr_number: 8
+pr_url: https://github.com/yukimnb/enso/pull/8
+task_range: ["001", "011"]
+notes: |
+  計画から実装・検証まで同一セッションで完了したため、dev-loop の
+  awaiting-approval は経由していない。全タスク completed。
+  AC-001〜AC-013 すべて通過（AC-013 は rsync のある環境で追加検証済み）。
+  main（PR #9 まで）をマージ済み。Draft を解除しレビュー依頼中。

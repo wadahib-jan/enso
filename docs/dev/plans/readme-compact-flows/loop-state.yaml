@@ -1,0 +1,9 @@
+plan_name: readme-compact-flows
+status: shipped
+branch: worktree-readme-compact-flows
+worktree: /workspace/enso/.claude/worktrees/readme-compact-flows
+pr_number: 43
+pr_url: https://github.com/yukimnb/enso/pull/43
+task_range: ["001", "001"]
+impl_approved_at: 2026-09-16T00:00:00Z
+merge_approved_at: 2026-09-15T15:30:32Z

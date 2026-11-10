@@ -1,0 +1,7 @@
+plan_name: issue-26-worktree-bash-guard
+status: shipped
+branch: worktree-issue-26-worktree-bash-guard
+worktree: /workspace/enso/.claude/worktrees/issue-26-worktree-bash-guard
+pr_number: 29
+pr_url: https://github.com/yukimnb/enso/pull/29
+task_range: ["001", "005"]

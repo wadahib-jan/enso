@@ -1,0 +1,7 @@
+plan_name: issue-15-sync-script-read-policy
+status: shipped
+branch: worktree-issue-15-sync-script-read-policy
+worktree: /workspace/enso/.claude/worktrees/issue-15-sync-script-read-policy
+pr_number: 16
+pr_url: https://github.com/yukimnb/enso/pull/16
+task_range: ["001", "003"]

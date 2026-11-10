@@ -1,0 +1,9 @@
+# pnpm 11 は未承認の build script があると install を exit 1 で終わらせ、
+# 判断待ちのこのファイルを未追跡で生成する。`pnpm <script>` は実行前に
+# auto-install を走らせるため、それだけで secretlint / biome に到達せず落ちる。
+# 判断をここに固定して追跡下に置くことで、その失敗と未追跡ファイルの生成を防ぐ。
+#
+# simple-git-hooks の postinstall は pre-commit フックの設置が目的で、
+# メインのチェックアウトでは実際に必要なため true にしている。
+allowBuilds:
+  simple-git-hooks: true

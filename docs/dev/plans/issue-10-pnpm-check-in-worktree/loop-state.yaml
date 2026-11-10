@@ -1,0 +1,9 @@
+plan_name: issue-10-pnpm-check-in-worktree
+status: shipped
+branch: worktree-issue-10-pnpm-check-in-worktree
+worktree: /workspace/enso/.claude/worktrees/issue-10-pnpm-check-in-worktree
+pr_number: 17
+pr_url: https://github.com/yukimnb/enso/pull/17
+task_range: ["001", "003"]
+issue_number: 10
+issue_url: https://github.com/yukimnb/enso/issues/10

@@ -1,0 +1,7 @@
+plan_name: merge-gate-dedupe
+status: shipped
+branch: worktree-merge-gate-dedupe
+worktree: /workspace/enso/.claude/worktrees/merge-gate-dedupe
+pr_number: 22
+pr_url: https://github.com/yukimnb/enso/pull/22
+task_range: ["001", "003"]

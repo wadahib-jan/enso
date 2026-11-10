@@ -1,0 +1,14 @@
+{
+  "enforce": {
+    "enabled": true,
+    "mode": "deny",
+    "worktree": true,
+    "flow": true,
+    "security": true,
+    "skills": ["dev-plan", "dev-loop", "ipa-security-check"],
+    "baseBranch": "main",
+    "mergeMethod": "merge",
+    "protectedBranches": ["main", "master", "develop"],
+    "exclude": ["docs/**", "*.md", ".claude/**", ".gitignore"]
+  }
+}

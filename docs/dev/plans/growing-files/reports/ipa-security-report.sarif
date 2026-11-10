@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "IPA Security Check Skill",
+          "version": "1.0.0",
+          "informationUri": "https://www.ipa.go.jp/security/vuln/websecurity/about.html",
+          "rules": [
+            {
+              "id": "IPA-SWS-11-AC-002",
+              "name": "IPA-SWS-11-AC-002",
+              "shortDescription": {
+                "text": "1.11 アクセス制御や認可制御の欠落"
+              },
+              "helpUri": "https://www.ipa.go.jp/security/vuln/websecurity/access-control.html",
+              "help": {
+                "text": "厳格にしたいプロジェクト向けに、未解決時の判定を enforce の設定で deny にできるようにする。",
+                "markdown": "**安全なウェブサイトの作り方 改訂第7版** 1.11 アクセス制御や認可制御の欠落 (p.45-47)\n\n厳格にしたいプロジェクト向けに、未解決時の判定を enforce の設定で deny にできるようにする。"
+              },
+              "properties": {
+                "tags": [
+                  "CWE-862"
+                ],
+                "category": "access_control"
+              }
+            },
+            {
+              "id": "IPA-SWS-11-AC-003",
+              "name": "IPA-SWS-11-AC-003",
+              "shortDescription": {
+                "text": "1.11 アクセス制御や認可制御の欠落"
+              },
+              "helpUri": "https://www.ipa.go.jp/security/vuln/websecurity/access-control.html",
+              "help": {
+                "text": "URL で指定されたときは loop-state の pr_url と完全一致で照合し、一致しなければ未解決として扱う。",
+                "markdown": "**安全なウェブサイトの作り方 改訂第7版** 1.11 アクセス制御や認可制御の欠落 (p.45-47)\n\nURL で指定されたときは loop-state の pr_url と完全一致で照合し、一致しなければ未解決として扱う。"
+              },
+              "properties": {
+                "tags": [
+                  "CWE-639"
+                ],
+                "category": "access_control"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "IPA-SWS-11-AC-003",
+          "level": "note",
+          "message": {
+            "text": "PR を URL で指定したとき、末尾の番号だけで計画を照合し owner/repo を見ない。別リポジトリの同じ番号の PR が、このリポジトリの計画のレポートや承認記録で ready / merge ゲートを通過し得る（merge 側に元からあった解析を ready と共有したもの。plan.md に記録済み）。"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "hooks/guard-bash.mjs"
+                },
+                "region": {
+                  "startLine": 164,
+                  "startColumn": 3,
+                  "snippet": {
+                    "text": "const asNumber = operand.match(/^(?:.*\\/pull\\/)?(\\d+)$/);"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "snippetHash": "sha256:e986a32ddb4c5300"
+          },
+          "properties": {
+            "triageStatus": "未対応",
+            "triageNote": "-",
+            "triagedAt": "-",
+            "triagedBy": "-",
+            "fpVerdict": "true_positive",
+            "fpReason": "prTarget の正規表現は URL の末尾番号だけを取り出し owner/repo を捨て、findLoopStateForPr（hooks/lib/policy.mjs:305）も pr_number の文字列一致のみで照合するため、別リポジトリの同番号 PR がこのリポジトリの計画のレポート・承認記録でゲートを通る経路が実在する。操作主体は AI エージェントのコマンドで外部攻撃者の入力経路ではない。",
+            "severity": "low"
+          }
+        },
+        {
+          "ruleId": "IPA-SWS-11-AC-002",
+          "level": "note",
+          "message": {
+            "text": "対象 PR の計画（loop-state.yaml）が解決できない `gh pr ready` は deny ではなく ask になる。セキュリティチェック未実施のまま、人の確認1回で ready にできる。enso 外の PR を ready にできなくならないようにするための設計判断（plan.md に記録済み）。"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "hooks/guard-bash.mjs"
+                },
+                "region": {
+                  "startLine": 280,
+                  "startColumn": 5,
+                  "snippet": {
+                    "text": "if (!state) {\n  unresolved = true;\n  continue;\n}"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "snippetHash": "sha256:da7f7f2bfd50ec3d"
+          },
+          "properties": {
+            "triageStatus": "未対応",
+            "triageNote": "-",
+            "triagedAt": "-",
+            "triagedBy": "-",
+            "fpVerdict": "true_positive",
+            "fpReason": "findLoopStateForPr が null を返すと unresolved=true・asks.push を経て最終的に emitDecision(\"ask\") のみが出る経路が mode に関係なく実在し、deny にする手段は無い。enso 外の PR を締め出さないための設計判断で、影響は人の確認1回で通せる程度に留まる。",
+            "severity": "low"
+          }
+        },
+        {
+          "ruleId": "IPA-SWS-11-AC-002",
+          "level": "note",
+          "message": {
+            "text": "warn モードでは、レポートが無い ready の判定（warn）が即 return するため、同じコマンド内の、モードに関係なく出るはずの ask（対象計画が解決できない ready、loop-state が見つからない merge）が出ずに warn だけで通る。例: warn モードで `gh pr ready 12 && gh pr ready 99999`（12 は計画あり・レポート無し）。deny / ask モードでは同じか強い判定を出すので弱まらない。"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "hooks/guard-bash.mjs"
+                },
+                "region": {
+                  "startLine": 284,
+                  "startColumn": 5,
+                  "snippet": {
+                    "text": "if (!hasSecurityReport(root, state)) {\n  emitDecision(enforce.mode, [...].join(\"\\n\"));\n  return;\n}"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "snippetHash": "sha256:f9b20e25f998e1c0"
+          },
+          "properties": {
+            "triageStatus": "未対応",
+            "triageNote": "-",
+            "triagedAt": "-",
+            "triagedBy": "-",
+            "fpVerdict": "true_positive",
+            "fpReason": "レポート無し時はループ内で decide を通さず emitDecision(enforce.mode) を呼び即 return するため、warn モードでは他の ready 対象の未解決 ask やマージゲートの decide(\"ask\") が評価されず warn だけで通る。deny / ask モードでは弱まらないので影響は warn モードに限定される。",
+            "severity": "low"
+          }
+        }
+      ]
+    }
+  ]
+}

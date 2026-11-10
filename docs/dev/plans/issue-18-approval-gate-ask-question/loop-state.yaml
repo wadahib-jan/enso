@@ -1,0 +1,7 @@
+plan_name: issue-18-approval-gate-ask-question
+status: shipped
+branch: worktree-issue-18-approval-gate-ask-question
+worktree: /workspace/enso/.claude/worktrees/issue-18-approval-gate-ask-question
+pr_number: 19
+pr_url: https://github.com/yukimnb/enso/pull/19
+task_range: ["001", "004"]

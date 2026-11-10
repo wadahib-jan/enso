@@ -1,0 +1,39 @@
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.iml
+
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Dependencies
+node_modules/
+.pnpm-store/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Build output
+dist/
+*.tsbuildinfo
+
+# Claude Code
+.claude/settings.local.json
+# dev-plan / dev-loop が作る worktree。メインのチェックアウトからは未追跡ファイルとして
+# 見えるため、これが無いと git status が常に汚れる（dev-plan Phase 0.7 が追記を指示している）
+.claude/worktrees/
+
+# Others
+tmp/
+
+# Version management
+.tool-versions

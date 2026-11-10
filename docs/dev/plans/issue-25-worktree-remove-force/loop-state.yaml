@@ -1,0 +1,9 @@
+plan_name: issue-25-worktree-remove-force
+status: shipped
+branch: worktree-issue-25-worktree-remove-force
+worktree: /workspace/enso/.claude/worktrees/issue-25-worktree-remove-force
+pr_number: 28
+pr_url: https://github.com/yukimnb/enso/pull/28
+task_range: ["001", "004"]
+issue_number: 25
+issue_url: https://github.com/yukimnb/enso/issues/25

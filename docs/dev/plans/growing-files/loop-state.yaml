@@ -1,0 +1,9 @@
+plan_name: growing-files
+status: shipped
+branch: worktree-growing-files
+worktree: /workspace/enso/.claude/worktrees/growing-files
+pr_number: 36
+pr_url: https://github.com/yukimnb/enso/pull/36
+task_range: ["001", "005"]
+impl_approved_at: 2026-09-14T13:49:55Z
+merge_approved_at: 2026-09-14T23:13:41Z

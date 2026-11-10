@@ -1,0 +1,9 @@
+plan_name: redundancy-cleanup
+status: shipped
+branch: worktree-redundancy-cleanup
+worktree: /workspace/enso/.claude/worktrees/redundancy-cleanup
+pr_number: 35
+pr_url: https://github.com/yukimnb/enso/pull/35
+task_range: ["001", "008"]
+impl_approved_at: 2026-09-14T12:27:52Z
+merge_approved_at: 2026-09-14T12:53:36Z

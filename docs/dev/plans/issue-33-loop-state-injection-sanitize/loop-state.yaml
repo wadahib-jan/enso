@@ -1,0 +1,9 @@
+plan_name: issue-33-loop-state-injection-sanitize
+status: shipped
+branch: worktree-issue-33-loop-state-injection-sanitize
+worktree: /workspace/enso/.claude/worktrees/issue-33-loop-state-injection-sanitize
+pr_number: 34
+pr_url: https://github.com/yukimnb/enso/pull/34
+task_range: ["001", "001"]
+impl_approved_at: 2026-09-13T13:07:55Z
+merge_approved_at: 2026-09-13T13:30:40Z

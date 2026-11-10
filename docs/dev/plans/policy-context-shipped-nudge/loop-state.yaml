@@ -1,0 +1,9 @@
+plan_name: policy-context-shipped-nudge
+status: shipped
+branch: worktree-policy-context-shipped-nudge
+worktree: /workspace/enso/.claude/worktrees/policy-context-shipped-nudge
+pr_number: 32
+pr_url: https://github.com/yukimnb/enso/pull/32
+task_range: ["001", "004"]
+impl_approved_at: 2026-09-13T00:00:00Z
+merge_approved_at: 2026-09-13T12:15:00Z

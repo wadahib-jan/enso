@@ -1,0 +1,9 @@
+plan_name: readme-usecase-flows
+status: shipped
+branch: worktree-readme-usecase-flows
+worktree: /workspace/enso/.claude/worktrees/readme-usecase-flows
+pr_number: 44
+pr_url: https://github.com/yukimnb/enso/pull/44
+task_range: ["001", "001"]
+impl_approved_at: 2026-09-16T12:59:26Z
+merge_approved_at: 2026-09-16T13:24:07Z

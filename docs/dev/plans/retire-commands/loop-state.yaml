@@ -1,0 +1,7 @@
+plan_name: retire-commands
+status: shipped
+branch: worktree-retire-commands
+worktree: /workspace/enso/.claude/worktrees/retire-commands
+pr_number: 21
+pr_url: https://github.com/yukimnb/enso/pull/21
+task_range: ["001", "004"]

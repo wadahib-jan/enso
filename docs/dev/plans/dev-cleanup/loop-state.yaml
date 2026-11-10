@@ -1,0 +1,7 @@
+plan_name: dev-cleanup
+status: shipped
+branch: worktree-dev-cleanup
+worktree: /workspace/enso/.claude/worktrees/dev-cleanup
+pr_number: 13
+pr_url: https://github.com/yukimnb/enso/pull/13
+task_range: ["001", "009"]

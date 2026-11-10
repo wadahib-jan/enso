@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  quality:
+    name: Code Quality & Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+
+      # version は指定しない。package.json の packageManager から解決される
+      - name: Install pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Install dependencies
+        run: pnpm install --ignore-scripts
+
+      - name: Check no files generated after install
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "Error: Files were generated or modified after pnpm install"
+            git status --porcelain
+            exit 1
+          fi
+
+      - name: Run secretlint
+        run: pnpm secretlint
+
+      - name: Run biome
+        run: pnpm check

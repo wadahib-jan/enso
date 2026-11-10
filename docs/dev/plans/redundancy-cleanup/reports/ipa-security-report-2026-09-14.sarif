@@ -1,0 +1,213 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "IPA Security Check Skill",
+          "version": "1.0.0",
+          "informationUri": "https://www.ipa.go.jp/security/vuln/websecurity/about.html",
+          "rules": [
+            {
+              "id": "IPA-SWS-1-TRAV-008",
+              "name": "IPA-SWS-1-TRAV-008",
+              "shortDescription": {
+                "text": "1.3 パス名パラメータの未チェック／ディレクトリ・トラバーサル"
+              },
+              "helpUri": "https://www.ipa.go.jp/security/vuln/websecurity/parameter.html",
+              "help": {
+                "text": "fs.realpathSync で実パスに正規化してから基準ディレクトリで始まるかを確認する。対象ファイルが未作成なら親ディレクトリを realpath して確認する。",
+                "markdown": "**安全なウェブサイトの作り方 改訂第7版** 1.3 パス名パラメータの未チェック／ディレクトリ・トラバーサル (p.16-18)\n\nfs.realpathSync で実パスに正規化してから基準ディレクトリで始まるかを確認する。対象ファイルが未作成なら親ディレクトリを realpath して確認する。"
+              },
+              "properties": {
+                "tags": [
+                  "CWE-22"
+                ],
+                "category": "directory_traversal"
+              }
+            },
+            {
+              "id": "IPA-SWS-11-AC-002",
+              "name": "IPA-SWS-11-AC-002",
+              "shortDescription": {
+                "text": "1.11 アクセス制御や認可制御の欠落"
+              },
+              "helpUri": "https://www.ipa.go.jp/security/vuln/websecurity/access-control.html",
+              "help": {
+                "text": "判定前にセグメントを正規化する（単独の `&`・括弧・バッククォート・`$(` でも分割、先頭の `VAR=value` と `command` / `env` / `sudo` 等のラッパーを除去、basename 化、引用符除去、`bash -c` の引数は再帰的に判定）。早期 return とマッチャーは共通の正規化関数を通して条件を一致させる。",
+                "markdown": "**安全なウェブサイトの作り方 改訂第7版** 1.11 アクセス制御や認可制御の欠落 (p.45-47)\n\n判定前にセグメントを正規化する（単独の `&`・括弧・バッククォート・`$(` でも分割、先頭の `VAR=value` と `command` / `env` / `sudo` 等のラッパーを除去、basename 化、引用符除去、`bash -c` の引数は再帰的に判定）。早期 return とマッチャーは共通の正規化関数を通して条件を一致させる。"
+              },
+              "properties": {
+                "tags": [
+                  "CWE-863"
+                ],
+                "category": "access_control"
+              }
+            },
+            {
+              "id": "IPA-SWS-11-AC-003",
+              "name": "IPA-SWS-11-AC-003",
+              "shortDescription": {
+                "text": "1.11 アクセス制御や認可制御の欠落"
+              },
+              "helpUri": "https://www.ipa.go.jp/security/vuln/websecurity/access-control.html",
+              "help": {
+                "text": "`gh pr ready` の対象 PR（引数または現在のブランチ）を findLoopStateForPr で解決し、その計画の reports/ だけを確認する。計画が見つからなければ ask にする。",
+                "markdown": "**安全なウェブサイトの作り方 改訂第7版** 1.11 アクセス制御や認可制御の欠落 (p.45-47)\n\n`gh pr ready` の対象 PR（引数または現在のブランチ）を findLoopStateForPr で解決し、その計画の reports/ だけを確認する。計画が見つからなければ ask にする。"
+              },
+              "properties": {
+                "tags": [
+                  "CWE-863"
+                ],
+                "category": "access_control"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "IPA-SWS-11-AC-002",
+          "level": "warning",
+          "message": {
+            "text": "コマンドの分割が `&&` `||` `;` `|` 改行のみで、各ルール（今回追加した早期 return を含む）は区切ったセグメントの先頭トークンが厳密に `git` / `gh` かだけを見ている。早期 return 自体は matchesGitCommand / matchesGhCommand と同じ条件なので新たな迂回は増えていないが、`FOO=1 git push`、`(git push)`、`true & git push`、`command git push`、`/usr/bin/git push`、`bash -c \"git push\"` などは worktree / 保護ブランチ・セキュリティ・マージ承認・削除確認の各ゲートをすべて通過する。"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "hooks/guard-bash.mjs"
+                },
+                "region": {
+                  "startLine": 29,
+                  "startColumn": 3,
+                  "snippet": {
+                    "text": "return command.split(/&&|\\|\\||[;|\\n]/).map((segment) => segment.trim()).filter(Boolean);"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "snippetHash": "sha256:68e3bab1530e33dd"
+          },
+          "properties": {
+            "triageStatus": "未対応",
+            "triageNote": "-",
+            "triagedAt": "-",
+            "triagedBy": "-",
+            "fpVerdict": "true_positive",
+            "fpReason": "segments() は && || ; | 改行でしか分割せず、早期 return（223行）と matchesGitCommand / matchesGhCommand はどちらも tokens()[0] が 'git' / 'gh' と完全一致することを前提にしているため、`FOO=1 git push`・`(git push)`・`/usr/bin/git push`・`bash -c \"git push\"` は全ゲートを実際に素通りする。入力は Claude が実行しようとする Bash コマンドで、外部攻撃者に対する境界ではなく開発フロー強制ガードの迂回なので影響は限定的。",
+            "severity": "medium"
+          }
+        },
+        {
+          "ruleId": "IPA-SWS-11-AC-002",
+          "level": "warning",
+          "message": {
+            "text": "オプションの解析が不完全。tokens() はフラグだけを捨てて値を残すため、`gh -R owner/repo pr merge 27` のようにサブコマンド前にグローバルオプションがあるとゲートに当たらない。`gh pr merge -R owner/repo 27` では mergeTarget が `owner/repo` をブランチ名と誤認して deny ではなく ask になる。matchesGitCommand は動詞の位置を index <= 2 に限定しているため `git -c a=b -c c=d -C path commit` も commit / push のゲートを外れる。"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "hooks/guard-bash.mjs"
+                },
+                "region": {
+                  "startLine": 48,
+                  "startColumn": 1,
+                  "snippet": {
+                    "text": "function matchesGhCommand(segment, sub) { const parts = tokens(segment); return parts[0] === \"gh\" && parts[1] === \"pr\" && parts[2] === sub; }"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "snippetHash": "sha256:1550f2a80fb4d7ee"
+          },
+          "properties": {
+            "triageStatus": "未対応",
+            "triageNote": "-",
+            "triagedAt": "-",
+            "triagedBy": "-",
+            "fpVerdict": "true_positive",
+            "fpReason": "tokens() は '-' で始まる語だけを捨てオプション値を残すため、`gh -R owner/repo pr merge 27` では parts[1] が 'owner/repo' になり merge ゲートに当たらず、`git -c a=b -c c=d -C path commit` は動詞が index 3 で index <= 2 の条件を外れて commit / push ゲートを通過する。`gh pr merge -R owner/repo 27` で mergeTarget（162行）が 'owner/repo' をブランチ名と誤認し ask に落ちることも確認した。",
+            "severity": "medium"
+          }
+        },
+        {
+          "ruleId": "IPA-SWS-11-AC-003",
+          "level": "note",
+          "message": {
+            "text": "`gh pr ready` のセキュリティゲートが対象 PR の計画に紐付いていない。docs/dev/plans/*/reports/ のいずれかに名前に `security` を含むファイルがあれば通過するため、過去の計画にレポートがあれば、ipa-security-check を実行していない新しい計画の PR も ready にできる。"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "hooks/guard-bash.mjs"
+                },
+                "region": {
+                  "startLine": 193,
+                  "startColumn": 1,
+                  "snippet": {
+                    "text": "function hasSecurityReport(projectRoot) { const states = findLoopStates(projectRoot); ... return dirs.some((dir) => { ... readdirSync(dir).some((name) => /security/i.test(name)); }); }"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "snippetHash": "sha256:7e4ed972bc95e890"
+          },
+          "properties": {
+            "triageStatus": "未対応",
+            "triageNote": "-",
+            "triagedAt": "-",
+            "triagedBy": "-",
+            "fpVerdict": "true_positive",
+            "fpReason": "hasSecurityReport(root) は findLoopStates で得た全計画の reports/ を some で走査しており、対象 PR・ブランチとの紐付け（findLoopStateForPr）が無い。呼び出し元（256行）も root のみを渡すため、過去の計画にセキュリティレポートが1つでもあれば未検査 PR でも `gh pr ready` が通る。",
+            "severity": "low"
+          }
+        },
+        {
+          "ruleId": "IPA-SWS-1-TRAV-008",
+          "level": "note",
+          "message": {
+            "text": "relativeToRoot() は path.resolve / path.relative による文字列上の正規化だけで、realpath によるシンボリックリンク解決を行わない。projectRoot 配下にある、外部を指すシンボリックリンク経由のパスは root 内の相対パスとして扱われ、ALWAYS_ALLOWED や除外パターン（docs/dev/** 等）に一致すれば編集ガードを通過する。入力は hook の stdin の file_path で、ガードは外部攻撃者に対する境界ではなく開発ポリシーの強制なので影響は限定的。"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "hooks/lib/policy.mjs"
+                },
+                "region": {
+                  "startLine": 173,
+                  "startColumn": 15,
+                  "snippet": {
+                    "text": "const absolute = isAbsolute(filePath) ? filePath : resolve(projectRoot, filePath);\nconst rel = relative(projectRoot, absolute);\nif (!rel || rel.startsWith(\"..\") || isAbsolute(rel)) return null;"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "snippetHash": "sha256:6a2e701a6c7e41b1"
+          },
+          "properties": {
+            "triageStatus": "未対応",
+            "triageNote": "-",
+            "triagedAt": "-",
+            "triagedBy": "-",
+            "fpVerdict": "true_positive",
+            "fpReason": "呼び出し元は guard-edit.mjs:33 のみで、stdin の file_path を realpath 解決せず relativeToRoot に渡し isExcluded（docs/dev/** 等）で許可判定するため、docs/dev 配下に置いたリポジトリ内の別ファイルを指すシンボリックリンク経由の編集は保護ブランチ上でもガードを通過し得る。ただしリンク作成や Bash による直接書き込みはもともとガード対象外なので影響は小さい。",
+            "severity": "low"
+          }
+        }
+      ]
+    }
+  ]
+}

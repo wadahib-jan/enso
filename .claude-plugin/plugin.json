@@ -1,0 +1,6 @@
+{
+  "name": "enso",
+  "version": "1.0.0",
+  "description": "AI-driven development toolkit for TDD and SDD workflows, providing skills to enhance developer productivity with Claude Code",
+  "skills": "./skills/"
+}

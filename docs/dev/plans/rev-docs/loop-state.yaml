@@ -1,0 +1,7 @@
+plan_name: rev-docs
+status: shipped
+branch: worktree-rev-docs
+worktree: /workspace/enso/.claude/worktrees/rev-docs
+pr_number: 20
+pr_url: https://github.com/yukimnb/enso/pull/20
+task_range: ["001", "005"]

@@ -1,0 +1,7 @@
+plan_name: skill-tiering
+status: shipped
+branch: worktree-skill-tiering
+worktree: /workspace/enso/.claude/worktrees/skill-tiering
+pr_number: 23
+pr_url: https://github.com/yukimnb/enso/pull/23
+task_range: ["001", "006"]

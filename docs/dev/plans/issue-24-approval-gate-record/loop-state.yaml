@@ -1,0 +1,8 @@
+plan_name: issue-24-approval-gate-record
+status: shipped
+branch: worktree-issue-24-approval-gate-record
+worktree: /workspace/enso/.claude/worktrees/issue-24-approval-gate-record
+pr_number: 27
+pr_url: https://github.com/yukimnb/enso/pull/27
+task_range: ["001", "005"]
+merge_approved_at: 2026-09-09T14:32:35Z

@@ -1,0 +1,9 @@
+plan_name: analysis-skills-consolidation
+status: shipped
+branch: worktree-analysis-skills-consolidation
+worktree: /workspace/enso/.claude/worktrees/analysis-skills-consolidation
+pr_number: 31
+pr_url: https://github.com/yukimnb/enso/pull/31
+task_range: ["001", "006"]
+impl_approved_at: 2026-09-12T00:00:00Z
+merge_approved_at: 2026-09-12T14:30:00Z

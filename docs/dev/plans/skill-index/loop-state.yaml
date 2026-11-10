@@ -1,0 +1,9 @@
+plan_name: skill-index
+status: shipped
+branch: worktree-skill-index
+worktree: /workspace/enso/.claude/worktrees/skill-index
+pr_number: 30
+pr_url: https://github.com/yukimnb/enso/pull/30
+task_range: ["001", "005"]
+impl_approved_at: 2026-09-12T12:33:01Z
+merge_approved_at: 2026-09-12T12:41:13Z

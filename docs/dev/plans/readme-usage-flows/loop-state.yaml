@@ -1,0 +1,9 @@
+plan_name: readme-usage-flows
+status: shipped
+branch: worktree-readme-usage-flows
+worktree: /workspace/enso/.claude/worktrees/readme-usage-flows
+pr_number: 42
+pr_url: https://github.com/yukimnb/enso/pull/42
+task_range: ["001", "001"]
+impl_approved_at: 2026-09-15T14:40:07Z
+merge_approved_at: 2026-09-15T15:01:16Z

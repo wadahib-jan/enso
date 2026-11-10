@@ -1,0 +1,9 @@
+plan_name: issue-12-track-enso-json
+status: shipped
+branch: worktree-issue-12-track-enso-json
+worktree: /workspace/enso/.claude/worktrees/issue-12-track-enso-json
+pr_number: 14
+pr_url: https://github.com/yukimnb/enso/pull/14
+task_range: ["001", "005"]
+issue_number: 12
+issue_url: https://github.com/yukimnb/enso/issues/12
